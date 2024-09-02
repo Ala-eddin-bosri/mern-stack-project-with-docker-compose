@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  web:
+    image: node:16-alpine
+    working_dir: /client
+    volumes:
+      - ./client:/client
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm start"
+
+  server:
+    image: node:16-alpine
+    working_dir: /server
+    volumes:
+      - ./server:/server
+    ports:
+      - "5000:5000"  # Corrected the port mapping
+    command: sh -c "npm install && node server.js"
+
+  db:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
